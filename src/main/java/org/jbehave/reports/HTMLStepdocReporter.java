@@ -2,6 +2,8 @@ package org.jbehave.reports;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jbehave.core.reporters.StepdocReporter;
 import org.jbehave.core.steps.Stepdoc;
 
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang.StringUtils.*;
 
 public class HTMLStepdocReporter implements StepdocReporter {
 
@@ -68,7 +72,8 @@ public class HTMLStepdocReporter implements StepdocReporter {
         stepMap.put("type", stepdoc.getStepType());
         stepMap.put("pattern", stepdoc.getPattern());
         stepMap.put("method", stepdoc.getMethod().getName());
-        stepMap.put("library", stepdoc.getMethod().getDeclaringClass().getSimpleName());
+        stepMap.put("library", join(splitByCharacterTypeCamelCase(stepdoc
+                .getMethod().getDeclaringClass().getSimpleName()), ' '));
 
         return stepMap;
     }

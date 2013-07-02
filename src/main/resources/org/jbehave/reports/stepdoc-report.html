@@ -66,9 +66,9 @@
             <th>Method</th>
         </tr>
         <tr data-ng-repeat="stepdoc in stepdocs |orderBy:library|orderBy:type|filter:query|filter:filterByType">
+            <td>{{stepdoc.library}}</td>
             <td>{{stepdoc.type}}</td>
             <td>{{stepdoc.pattern}}</td>
-            <td>{{stepdoc.library}}</td>
             <td>{{stepdoc.method}}</td>
         </tr>
     </table>
