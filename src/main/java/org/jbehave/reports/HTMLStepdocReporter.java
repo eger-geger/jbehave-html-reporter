@@ -39,22 +39,26 @@ public class HTMLStepdocReporter implements StepdocReporter {
             steps.add(convertStepDoc(stepdoc));
         }
 
-        try(Writer wr = createJsonWriter()){
-            objectMapper.writer().withDefaultPrettyPrinter().writeValue(wr, steps);
-
+        try{
             new CopyTarget(outputPath)
                     .copyClasspathResource("org/jbehave/reports/css")
                     .copyClasspathResource("org/jbehave/reports/js")
                     .copyClasspathResource("org/jbehave/reports/stepdoc-report.html");
         } catch (IOException | URISyntaxException ex){
-            throw new RuntimeException("Failed generate report", ex);
+            throw new RuntimeException("Failed to copy resources", ex);
+        }
+
+        try(Writer wr = createJsonWriter()){
+            objectMapper.writer().withDefaultPrettyPrinter().writeValue(wr, steps);
+        } catch (IOException ex) {
+            throw new RuntimeException("Failed to write step data");
         }
     }
 
     public void stepdocsMatching(String stepAsString, List<Stepdoc> matching, List<Object> stepsIntances) {}
 
     private Writer createJsonWriter() throws IOException {
-        return Files.newBufferedWriter(outputPath.resolveSibling(DATA_FILE_NAME),
+        return Files.newBufferedWriter(outputPath.resolve(DATA_FILE_NAME),
                 Charset.forName("UTF-8"));
     }
 

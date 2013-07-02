@@ -61,14 +61,14 @@
     <table class="table table-condensed">
         <tr>
             <th>Type</th>
-            <th>Library</th>
             <th>Pattern</th>
+            <th>Library</th>
             <th>Method</th>
         </tr>
         <tr data-ng-repeat="stepdoc in stepdocs |orderBy:library|orderBy:type|filter:query|filter:filterByType">
             <td>{{stepdoc.type}}</td>
-            <td>{{stepdoc.library}}</td>
             <td>{{stepdoc.pattern}}</td>
+            <td>{{stepdoc.library}}</td>
             <td>{{stepdoc.method}}</td>
         </tr>
     </table>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Collections;
 
 public class CopyTarget {
 
@@ -14,7 +15,7 @@ public class CopyTarget {
     }
 
     public CopyTarget copyPath(final Path source) throws IOException, URISyntaxException {
-        final Path copy = target.resolve(source.getFileName());
+        final Path copy = target.resolve(source.getFileName().toString());
 
         Files.createDirectories(copy);
 
@@ -24,7 +25,9 @@ public class CopyTarget {
             Files.walkFileTree(source, new FileVisitor<Path>() {
 
                 private void copyRelative(Path path) throws IOException {
-                    Files.copy(path, copy.resolve(source.relativize(path)), StandardCopyOption.REPLACE_EXISTING);
+                    path = path.subpath(0, path.getNameCount());
+
+                    Files.copy(path, copy.resolve(source.relativize(path).toString()), StandardCopyOption.REPLACE_EXISTING);
                 }
 
                 public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
@@ -52,6 +55,13 @@ public class CopyTarget {
     }
 
     public CopyTarget copyClasspathResource(String path) throws IOException, URISyntaxException {
-        return copyPath(Paths.get(getClass().getClassLoader().getResource(path).toURI()));
+        FileSystem fs = FileSystems.newFileSystem(getClass().getClassLoader()
+                .getResource(path).toURI(), Collections.<String,Object>emptyMap());
+
+        CopyTarget self = copyPath(fs.getPath(path));
+
+        fs.close();
+
+        return self;
     }
 }
