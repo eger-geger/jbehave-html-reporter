@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StepDoc Report</title>
+
+    <script src="js/angular.min.js"></script>
+    <script src="js/ui-bootstrap-0.4.0.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.4.0.js"></script>
+
+    <script src="js/report.module.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body data-ng-app="StepDocReport" data-ng-controller="StepDocController">
+
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span3">
+                <input type="text" class="input-medium search-query" data-ng-model="query"/>
+            </div>
+
+            <div class="span2">
+                <label class="checkbox">
+                    <input type="checkbox" data-ng-model="types.showGiven" /> Given
+                </label>
+            </div>
+
+            <div class="span2">
+                <label class="checkbox">
+                    <input type="checkbox" data-ng-model="types.showWhen"/> When
+                </label>
+            </div>
+
+            <div class="span2">
+                <label class="checkbox">
+                    <input type="checkbox" data-ng-model="types.showThen" /> Then
+                </label>
+            </div>
+
+            <div class="span2">
+                <select data-ng-model="pagination.onPage"
+                        data-ng-options="c for c in [12, 24, 48, 96, 192]"
+                        data-ng-change="updateStepDocs()">
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row-fluid">
+            <pagination class="offset3 span6"
+                        num-pages="pagination.size"
+                        current-page="pagination.current"
+                        boundary-links="false"
+                        direction-links="false"
+                        on-select-page="updateStepDocs()">
+            </pagination>
+        </div>
+    </div>
+
+    <table class="table table-condensed">
+        <tr>
+            <th>Type</th>
+            <th>Library</th>
+            <th>Pattern</th>
+            <th>Method</th>
+        </tr>
+        <tr data-ng-repeat="stepdoc in stepdocs |orderBy:library|orderBy:type|filter:query|filter:filterByType">
+            <td>{{stepdoc.type}}</td>
+            <td>{{stepdoc.library}}</td>
+            <td>{{stepdoc.pattern}}</td>
+            <td>{{stepdoc.method}}</td>
+        </tr>
+    </table>
+
+    <div class="container">
+        <div class="row-fluid">
+            <pagination class="offset3 span6"
+                    num-pages="pagination.size"
+                    current-page="pagination.current"
+                    boundary-links="false"
+                    direction-links="false"
+                    on-select-page="updateStepDocs()">
+            </pagination>
+        </div>
+    </div>
+
+</body>
+</html>
