@@ -6,7 +6,7 @@ angular.module('ui.bootstrap.transition', [])
  * $transition service provides a consistent interface to trigger CSS 3 transitions and to be informed when they complete.
  * @param  {DOMElement} element  The DOMElement that will be animated.
  * @param  {string|object|function} trigger  The thing that will cause the transition to start:
- *   - As a string, it represents the css class to be added to the element.
+ *   - As a string, it represents the org.jbehave.reports.css class to be added to the element.
  *   - As an object, it represents a hash of style attributes to be applied to the element.
  *   - As a function, it represents a function to be called that will cause the transition to occur.
  * @return {Promise}  A promise that is resolved when the transition finishes.
@@ -598,7 +598,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
       </slide>
     </carousel>
   </file>
-  <file name="demo.css">
+  <file name="demo.org.jbehave.reports.css">
     .carousel-indicators {
       top: auto;
       bottom: 15px;
@@ -662,7 +662,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
   </div>
 </div>
   </file>
-  <file name="script.js">
+  <file name="script.org.jbehave.reports.js">
 function CarouselDemoCtrl($scope) {
   $scope.myInterval = 5000;
   var slides = $scope.slides = [];
@@ -677,7 +677,7 @@ function CarouselDemoCtrl($scope) {
   for (var i=0; i<4; i++) $scope.addSlide();
 }
   </file>
-  <file name="demo.css">
+  <file name="demo.org.jbehave.reports.css">
     .carousel-indicators {
       top: auto;
       bottom: 15px;
@@ -1216,7 +1216,7 @@ dialogModule.provider("$dialog", function(){
       //
       // * `result`: the result to pass to the `close` method of the dialog when the button is clicked
       // * `label`: the label of the button
-      // * `cssClass`: additional css class(es) to apply to the button for styling
+      // * `cssClass`: additional org.jbehave.reports.css class(es) to apply to the button for styling
       messageBox: function(title, message, buttons){
         return new Dialog({templateUrl: 'template/dialog/message.html', controller: 'MessageBoxController', resolve:
           {model: function() {
@@ -1233,7 +1233,7 @@ dialogModule.provider("$dialog", function(){
 });
 
 /*
- * dropdownToggle - Provides dropdown menu functionality in place of bootstrap js
+ * dropdownToggle - Provides dropdown menu functionality in place of bootstrap org.jbehave.reports.js
  * @restrict class or attribute
  * @example:
    <li class="dropdown">
@@ -2267,7 +2267,7 @@ function TabsetCtrl($scope, $element) {
       </tabset>
     </div>
   </file>
-  <file name="script.js">
+  <file name="script.org.jbehave.reports.js">
     function TabsDemoCtrl($scope) {
       $scope.items = [
         { title:"Dynamic Title 1", content:"Dynamic Item 0" },

@@ -43,9 +43,9 @@ public class HTMLStepdocReporter implements StepdocReporter {
             objectMapper.writer().withDefaultPrettyPrinter().writeValue(wr, steps);
 
             new CopyTarget(outputPath)
-                    .copyClasspathResource("css")
-                    .copyClasspathResource("js")
-                    .copyClasspathResource("stepdoc-report.html");
+                    .copyClasspathResource("org/jbehave/reports/css")
+                    .copyClasspathResource("org/jbehave/reports/js")
+                    .copyClasspathResource("org/jbehave/reports/stepdoc-report.html");
         } catch (IOException | URISyntaxException ex){
             throw new RuntimeException("Failed generate report", ex);
         }
