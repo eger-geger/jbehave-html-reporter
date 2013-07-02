@@ -2,7 +2,6 @@ package org.jbehave.reports;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.apache.commons.io.IOUtils;
 import org.jbehave.core.reporters.StepdocReporter;
 import org.jbehave.core.steps.Stepdoc;
 
@@ -11,26 +10,26 @@ import java.io.Writer;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonStepDocAggregator implements StepdocReporter {
+public class HTMLStepdocReporter implements StepdocReporter {
 
     private static final String DATA_FILE_NAME = "stepdocs.json";
 
     private final ObjectMapper objectMapper;
 
-    public JsonStepDocAggregator(){
+    private final Path outputPath;
+
+    public HTMLStepdocReporter(Path outputPath){
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FLUSH_AFTER_WRITE_VALUE, true);
 
         this.objectMapper = objectMapper;
-    }
-
-    public JsonStepDocAggregator(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+        this.outputPath = outputPath;
     }
 
     public void stepdocs(List<Stepdoc> stepdocs, List<Object> stepsInstances) {
@@ -43,7 +42,7 @@ public class JsonStepDocAggregator implements StepdocReporter {
         try(Writer wr = createJsonWriter()){
             objectMapper.writer().withDefaultPrettyPrinter().writeValue(wr, steps);
 
-            new CopyTarget(ReportConfig.getInstance().getOutputPath())
+            new CopyTarget(outputPath)
                     .copyClasspathResource("css")
                     .copyClasspathResource("js")
                     .copyClasspathResource("stepdoc-report.html");
@@ -55,7 +54,7 @@ public class JsonStepDocAggregator implements StepdocReporter {
     public void stepdocsMatching(String stepAsString, List<Stepdoc> matching, List<Object> stepsIntances) {}
 
     private Writer createJsonWriter() throws IOException {
-        return Files.newBufferedWriter(ReportConfig.getInstance().getOutputPath().resolveSibling(DATA_FILE_NAME),
+        return Files.newBufferedWriter(outputPath.resolveSibling(DATA_FILE_NAME),
                 Charset.forName("UTF-8"));
     }
 

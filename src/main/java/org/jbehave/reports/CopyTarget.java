@@ -52,6 +52,6 @@ public class CopyTarget {
     }
 
     public CopyTarget copyClasspathResource(String path) throws IOException, URISyntaxException {
-        return copyPath(Paths.get(getClass().getResource(path).toURI()));
+        return copyPath(Paths.get(ClassLoader.getSystemResource(path).toURI()));
     }
 }
