@@ -2,8 +2,6 @@ package org.jbehave.reports;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
 import org.jbehave.core.reporters.StepdocReporter;
 import org.jbehave.core.steps.Stepdoc;
 
@@ -47,7 +45,7 @@ public class HTMLStepdocReporter implements StepdocReporter {
             new CopyTarget(outputPath)
                     .copyClasspathResource("org/jbehave/reports/css")
                     .copyClasspathResource("org/jbehave/reports/js")
-                    .copyClasspathResource("org/jbehave/reports/stepdoc-report.html");
+                    .copyClasspathResource("org/jbehave/reports/index.html");
         } catch (IOException | URISyntaxException ex){
             throw new RuntimeException("Failed to copy resources", ex);
         }
