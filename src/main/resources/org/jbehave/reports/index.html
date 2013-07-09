@@ -13,77 +13,77 @@
 </head>
 <body data-ng-app="StepDocReport" data-ng-controller="StepDocController">
 
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span3">
-                <input type="text" class="input-medium search-query" data-ng-model="query"/>
-            </div>
+<div class="container">
+    <div class="row-fluid">
+        <div class="span3">
+            <input type="text" class="input-medium search-query" data-ng-model="query"/>
+        </div>
 
-            <div class="span2">
-                <label class="checkbox">
-                    <input type="checkbox" data-ng-model="types.showGiven" /> Given
-                </label>
-            </div>
+        <div class="span2">
+            <label class="checkbox">
+                <input type="checkbox" data-ng-model="types.showGiven"/> Given
+            </label>
+        </div>
 
-            <div class="span2">
-                <label class="checkbox">
-                    <input type="checkbox" data-ng-model="types.showWhen"/> When
-                </label>
-            </div>
+        <div class="span2">
+            <label class="checkbox">
+                <input type="checkbox" data-ng-model="types.showWhen"/> When
+            </label>
+        </div>
 
-            <div class="span2">
-                <label class="checkbox">
-                    <input type="checkbox" data-ng-model="types.showThen" /> Then
-                </label>
-            </div>
+        <div class="span2">
+            <label class="checkbox">
+                <input type="checkbox" data-ng-model="types.showThen"/> Then
+            </label>
+        </div>
 
-            <div class="span2">
-                <select data-ng-model="pagination.onPage"
-                        data-ng-options="c for c in [12, 24, 48, 96, 192]"
-                        data-ng-change="updateStepDocs()">
-                </select>
-            </div>
+        <div class="span2">
+            <select data-ng-model="pagination.onPage"
+                    data-ng-options="c for c in [12, 24, 48, 96, 192]"
+                    data-ng-change="updateStepDocs()">
+            </select>
         </div>
     </div>
+</div>
 
-    <div class="container">
-        <div class="row-fluid">
-            <pagination class="offset3 span6"
-                        num-pages="pagination.size"
-                        current-page="pagination.current"
-                        boundary-links="false"
-                        direction-links="false"
-                        on-select-page="updateStepDocs()">
-            </pagination>
-        </div>
-    </div>
-
-    <table class="table table-condensed">
-        <tr>
-            <th>Type</th>
-            <th>Pattern</th>
-            <th>Library</th>
-            <th>Method</th>
-        </tr>
-        <tr data-ng-repeat="stepdoc in stepdocs |orderBy:library|orderBy:type|filter:query|filter:filterByType">
-            <td>{{stepdoc.library}}</td>
-            <td>{{stepdoc.type}}</td>
-            <td>{{stepdoc.pattern}}</td>
-            <td>{{stepdoc.method}}</td>
-        </tr>
-    </table>
-
-    <div class="container">
-        <div class="row-fluid">
-            <pagination class="offset3 span6"
+<div class="container">
+    <div class="row-fluid">
+        <pagination class="offset3 span6"
                     num-pages="pagination.size"
                     current-page="pagination.current"
                     boundary-links="false"
                     direction-links="false"
                     on-select-page="updateStepDocs()">
-            </pagination>
-        </div>
+        </pagination>
     </div>
+</div>
+
+<table class="table table-condensed">
+    <tr>
+        <th>Library</th>
+        <th>Type</th>
+        <th>Pattern</th>
+        <th>Method</th>
+    </tr>
+    <tr data-ng-repeat="stepdoc in stepdocs |orderBy:library|orderBy:type|filter:query|filter:filterByType">
+        <td>{{stepdoc.library}}</td>
+        <td>{{stepdoc.type}}</td>
+        <td>{{stepdoc.pattern}}</td>
+        <td>{{stepdoc.method}}</td>
+    </tr>
+</table>
+
+<div class="container">
+    <div class="row-fluid">
+        <pagination class="offset3 span6"
+                    num-pages="pagination.size"
+                    current-page="pagination.current"
+                    boundary-links="false"
+                    direction-links="false"
+                    on-select-page="updateStepDocs()">
+        </pagination>
+    </div>
+</div>
 
 </body>
 </html>

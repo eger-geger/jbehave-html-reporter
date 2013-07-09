@@ -16,17 +16,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang.StringUtils.*;
+import static org.apache.commons.lang.StringUtils.join;
+import static org.apache.commons.lang.StringUtils.splitByCharacterTypeCamelCase;
 
 public class HTMLStepdocReporter implements StepdocReporter {
 
-    private static final String DATA_FILE_NAME = "stepdocs.json";
+    private static final String DATA_FILE_NAME = "org/jbehave/reports/stepdocs.json";
 
     private final ObjectMapper objectMapper;
 
     private final Path outputPath;
 
-    public HTMLStepdocReporter(Path outputPath){
+    public HTMLStepdocReporter(Path outputPath) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.FLUSH_AFTER_WRITE_VALUE, true);
 
@@ -37,34 +38,35 @@ public class HTMLStepdocReporter implements StepdocReporter {
     public void stepdocs(List<Stepdoc> stepdocs, List<Object> stepsInstances) {
         List<Map> steps = new ArrayList<>();
 
-        for(Stepdoc stepdoc: stepdocs){
+        for (Stepdoc stepdoc : stepdocs) {
             steps.add(convertStepDoc(stepdoc));
         }
 
-        try{
+        try {
             new CopyTarget(outputPath)
                     .copyClasspathResource("org/jbehave/reports/css")
                     .copyClasspathResource("org/jbehave/reports/js")
                     .copyClasspathResource("org/jbehave/reports/index.html");
-        } catch (IOException | URISyntaxException ex){
+        } catch (IOException | URISyntaxException ex) {
             throw new RuntimeException("Failed to copy resources", ex);
         }
 
-        try(Writer wr = createJsonWriter()){
+        try (Writer wr = createJsonWriter()) {
             objectMapper.writer().withDefaultPrettyPrinter().writeValue(wr, steps);
         } catch (IOException ex) {
             throw new RuntimeException("Failed to write step data");
         }
     }
 
-    public void stepdocsMatching(String stepAsString, List<Stepdoc> matching, List<Object> stepsIntances) {}
+    public void stepdocsMatching(String stepAsString, List<Stepdoc> matching, List<Object> stepsIntances) {
+    }
 
     private Writer createJsonWriter() throws IOException {
         return Files.newBufferedWriter(outputPath.resolve(DATA_FILE_NAME),
                 Charset.forName("UTF-8"));
     }
 
-    private Map<String, Object> convertStepDoc(Stepdoc stepdoc){
+    private Map<String, Object> convertStepDoc(Stepdoc stepdoc) {
         HashMap<String, Object> stepMap = new HashMap<>();
 
         stepMap.put("type", stepdoc.getStepType());
