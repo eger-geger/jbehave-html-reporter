@@ -7,7 +7,6 @@ import org.jbehave.core.steps.Stepdoc;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +20,7 @@ import static org.apache.commons.lang.StringUtils.splitByCharacterTypeCamelCase;
 
 public class HTMLStepdocReporter implements StepdocReporter {
 
-    private static final String DATA_FILE_NAME = "org/jbehave/reports/stepdocs.json";
+    private static final String DATA_FILE_NAME = "stepdocs.json";
 
     private final ObjectMapper objectMapper;
 
@@ -43,11 +42,11 @@ public class HTMLStepdocReporter implements StepdocReporter {
         }
 
         try {
-            new CopyTarget(outputPath)
-                    .copyClasspathResource("org/jbehave/reports/css")
-                    .copyClasspathResource("org/jbehave/reports/js")
-                    .copyClasspathResource("org/jbehave/reports/index.html");
-        } catch (IOException | URISyntaxException ex) {
+            new ClassPathResources("org.jbehave.reports")
+                    .copy(".*\\.css", outputPath.resolve("css"))
+                    .copy(".*\\.js", outputPath.resolve("js"))
+                    .copy("index.html", outputPath);
+        } catch (IOException ex) {
             throw new RuntimeException("Failed to copy resources", ex);
         }
 
