@@ -1,1 +1,15 @@
-This file was created by IntelliJ IDEA 12.1.3 for binding GitHub repository
+## Configure Embedder: 
+
+```java
+
+  configuration().useStepdocReporter(new HTMLStepdocReporter(Paths.get("target/step-report")));
+
+```
+
+## Use embedder for reporting stepdocs:
+
+```java
+
+  new ReportEmbedder().configuredEmbedder().reportStepdocs();
+
+```
